@@ -1,5 +1,5 @@
 -- Script that list all bands with Glam rock as their main style
 -- ranked by their longevity
-SELECT band_name,  IFNULL(split, "2020-01-01")-formed AS
+SELECT band_name,  IFNULL(split, "2023")- formed AS
 lifespan FROM metal_bands
-WHERE style LIKE "%Glam rock%" ORDER BY lifespan DESC;
+WHERE style LIKE "%Glam rock%" ORDER BY lifespan DESC, band_name DESC;
