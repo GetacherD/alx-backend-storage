@@ -1,0 +1,2 @@
+// Show all documents in a collection select * from table like SQL
+db.school.find()
