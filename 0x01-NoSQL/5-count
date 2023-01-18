@@ -1,0 +1,2 @@
+// display count of documents or records
+db.school.find().count()
