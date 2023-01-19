@@ -11,6 +11,7 @@ class Cache:
     """ cache objects blue print"""
 
     def __init__(self):
+        """initializee"
         self._redis = redis.Redis()
         self._redis.flushdb()
 
