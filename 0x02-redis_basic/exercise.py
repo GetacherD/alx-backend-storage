@@ -18,5 +18,8 @@ class Cache:
     def store(self, data: Union[bytes, float, int, str]) -> str:
         """ store cache object  """
         key = str(uuid4())
-        self._redis.set(key, str(data))
+        try:
+            self._redis.set(key, data)
+        except Exception:
+            self._redis.set(key, str(data))
         return key
