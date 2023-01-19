@@ -5,6 +5,7 @@ redis basics demo
 from redis import Redis
 from typing import Union
 from uuid import uuid4
+import json
 
 
 class Cache:
@@ -21,5 +22,5 @@ class Cache:
         try:
             self._redis.set(key, data)
         except Exception:
-            self._redis.set(key, str(data))
+            self._redis.set(key, json.dumps(data))
         return key
