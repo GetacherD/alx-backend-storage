@@ -22,10 +22,11 @@ class Cache:
         self._redis.set(key, data)
         return key
 
-    def get(self, key: str, fn: Optional[Callable]) -> Union[str, bytes, int, float, None]:
+    def get(self, key: str,
+            fn: Optional[Callable]) -> Union[str, bytes, int, float]:
         """ get value associated with the key"""
         val = self._redis.get(key)
-        if (fn and val):
+        if fn:
             return fn(val)
         return val
 
