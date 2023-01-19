@@ -2,7 +2,7 @@
 """
 redis basics demo
 """
-import redis
+from redis import Redis
 from typing import Union
 from uuid import uuid4
 
@@ -12,13 +12,11 @@ class Cache:
 
     def __init__(self):
         """initializee"""
-        self._redis = redis.Redis()
+        self._redis = Redis()
         self._redis.flushdb()
 
     def store(self, data: Union[bytes, float, int, str]) -> str:
         """ store cache object  """
         key = str(uuid4())
-        if type(data) not in [bytes, str, int, float]:
-            return ""
-        self._redis.set(key, data)
+        self._redis.set(key, str(data))
         return key
