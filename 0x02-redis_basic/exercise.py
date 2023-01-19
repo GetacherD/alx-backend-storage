@@ -11,12 +11,12 @@ class Cache:
     """ cache objects blue print"""
 
     def __init__(self):
-        """initializee"
+        """initializee"""
         self._redis = redis.Redis()
         self._redis.flushdb()
 
     def store(self, data: Union[bytes, float, int, str]) -> str:
-        """ store cache object """
+        """ store cache object  """
         key = str(uuid4())
         if type(data) not in [bytes, str, int, float]:
             return ""
