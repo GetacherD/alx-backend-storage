@@ -1,2 +1,2 @@
 -- Create Index on first letter of column
-CREATE INDEX idx_name_first on names name(1);
+ALTER TABLE names ADD INDEX idx_name_first name(1);
