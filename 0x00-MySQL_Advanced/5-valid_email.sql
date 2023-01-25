@@ -1,11 +1,10 @@
 -- trigger for reset when email changed
 DELIMITER ~
-CREATE TRIGGER email_changed BEFORE UPDATE ON users
+CREATE TRIGGER tr_Update BEFORE UPDATE ON users
 FOR EACH ROW
 BEGIN
-if OLD.email != NEW.email THEN
-IF NEW.id=OLD.id THEN
-SET NEW.valid_email = 1;
-END IF;
-END IF;
+	IF OLD.email != NEW.email THEN
+		SET NEW.valid_email=0;
+	END IF;
 END~
+DELIMITER ;
