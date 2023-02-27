@@ -9,6 +9,22 @@ import json
 from functools import wraps
 
 
+def call_history(method: Callable) -> Callable:
+    """store history of function input and out put"""
+    key = method.__qualname__
+    inputs = key + ":inputs"
+    outputs = key + ":outputs"
+
+    @wraps(method)
+    def wrapper(self, *args, **kwargs):
+        """wrapper function"""
+        self._redis.rpush(inputs, str(args))
+        data = method(self, *args, **kwargs)
+        self._redis.rpush(outputs, str(data))
+        return data
+    return wrapper
+
+
 def count_calls(method: Callable) -> Callable:
     """ Count number of calls of a function"""
     key = method.__qualname__
@@ -29,6 +45,7 @@ class Cache:
         self._redis = redis.Redis()
         self._redis.flushdb()
 
+    @call_history
     @count_calls
     def store(self, data: Union[str, bytes, int, float]) -> str:
         """ store cache object  """
