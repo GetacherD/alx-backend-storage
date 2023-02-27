@@ -26,18 +26,20 @@ class Cache:
             fn: Optional[Callable]) -> Union[str, bytes, int, float]:
         """ get value associated with the key"""
         val = self._redis.get(key)
-        if fn:
+        if val:
             return fn(val)
         return val
 
     def get_str(self, key: str) -> str:
         """ get str """
         val = self._redis.get(key)
-        return str(val)
+        if val:
+            return str(val)
+        return val
 
     def get_int(self, key: str) -> int:
         """ get int """
         val = self._redis.get(key)
-        if (val):
+        if val:
             return int(val)
-        return -1
+        return val
