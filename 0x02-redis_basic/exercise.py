@@ -26,7 +26,7 @@ class Cache:
             fn: Optional[Callable] = None) -> Union[str, bytes, int, float]:
         """ get value associated with the key"""
         val = self._redis.get(key)
-        if val:
+        if fn:
             return fn(val)
         return val
 
