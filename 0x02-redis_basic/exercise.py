@@ -6,6 +6,19 @@ import redis
 from typing import Union, Callable, Optional
 from uuid import uuid4
 import json
+from functools import wraps
+
+
+def count_calls(method: Callable) -> Callable:
+    """ Count number of calls of a function"""
+    key = method.__qualname__
+
+    @wraps(method)
+    def wrappers(self, *args, **kwargs):
+        "wrapped function"
+        self._redis.incr(key)
+        return method(self, *args, **kwargs)
+    return wrappers
 
 
 class Cache:
@@ -16,6 +29,7 @@ class Cache:
         self._redis = redis.Redis()
         self._redis.flushdb()
 
+    @count_calls
     def store(self, data: Union[str, bytes, int, float]) -> str:
         """ store cache object  """
         key = str(uuid4())
