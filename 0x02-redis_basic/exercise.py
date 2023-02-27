@@ -22,8 +22,8 @@ class Cache:
         self._redis.set(key, data)
         return key
 
-    def get(self, key: Optional[str],
-            fn: Optional[Callable]) -> Union[str, bytes, int, float]:
+    def get(self, key: Optional,
+            fn: Optional[Callable] = None) -> Union[str, bytes, int, float]:
         """ get value associated with the key"""
         val = self._redis.get(key)
         if val:
@@ -33,13 +33,13 @@ class Cache:
     def get_str(self, key: str) -> str:
         """ get str """
         val = self._redis.get(key)
-        if val:
-            return str(val)
-        return val
+        return val.decode("utf-8")
 
     def get_int(self, key: str) -> int:
         """ get int """
         val = self._redis.get(key)
-        if val:
-            return int(val)
-        return val
+        try:
+            data = int(val)
+        except Exception:
+            data = 0
+        return data
